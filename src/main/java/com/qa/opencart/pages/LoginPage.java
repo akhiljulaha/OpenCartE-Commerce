@@ -6,6 +6,7 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.w3c.dom.ls.LSOutput;
 
 import com.qa.opencart.utils.AppConstants;
 import com.qa.opencart.utils.ElementUtil;
@@ -23,11 +24,12 @@ public class LoginPage {
 	private By emailId = By.id("input-email"); // 3
 	private By password = By.id("input-password");
 	private By loginButton = By.xpath("//input[@value='Login']");
-	private By forgotPWdLink = By.linkText("Forgotten Password------");
+	private By forgotPWdLink = By.linkText("Forgotten Password");
 	private By footerLinks = By.xpath("//footer//a");
 	private By loginErrorMessg = By.xpath("//div[@class='alert alert-danger alert-dismissible']");
 	private By registerlink = By.linkText("Register");
 
+	
 // Public Page Actions/Method -> what exactly you want to do on the particular page
 	@Step("getting login page title")
 	public String getLoginPageTitle() {
@@ -38,7 +40,7 @@ public class LoginPage {
 		return eleUtil.waitForURLContainsAndCapture(AppConstants.LOGIN_PAGE_URL_FRACTION_VALUE, AppConstants.SHORT_DEFAULT_WAIT);
 		
 	}
-	@Step("checking forgot pwd link exist on the login page")
+	@Step("Check-- the login page")
 	public boolean isForgotPwdLinkExist() {
 		return eleUtil.checkElementIsDisplayed(forgotPWdLink);
 	}
