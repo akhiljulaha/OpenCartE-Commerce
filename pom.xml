@@ -45,16 +45,17 @@
             <artifactId>extentreports</artifactId>
             <version>5.1.1</version>
        </dependency>
-        <dependency>
-			<groupId>io.qameta.allure</groupId>
-			<artifactId>allure-rest-assured</artifactId>
-			<version>2.27.0</version>
-		</dependency>
-		<dependency>
+       
+        	<dependency>
 			<groupId>io.qameta.allure</groupId>
 			<artifactId>allure-testng</artifactId>
 			<version>2.27.0</version>
 		</dependency>
+		<dependency>
+                    <groupId>org.aspectj</groupId>
+                    <artifactId>aspectjweaver</artifactId>
+                    <version>1.9.22.1</version>
+                 </dependency>
   </dependencies>
   <build>
   <plugins>
@@ -77,8 +78,8 @@
 					<forkCount>3</forkCount>
 					<reuseForks>true</reuseForks>
 					<suiteXmlFiles>
-			<!--  <suiteXmlFile>src/main/resources/testrunners/testng_regression.xml</suiteXmlFile> -->
-					 <suiteXmlFile>${suiteXmlFile}</suiteXmlFile> 
+			 <suiteXmlFile>${basedir}/src/main/resources/testrunners/testng_regression.xml</suiteXmlFile>
+			<!-- 		 <suiteXmlFile>${suiteXmlFile}</suiteXmlFile> -->
 
 					</suiteXmlFiles>
 						<argLine>
@@ -86,13 +87,7 @@
                         </argLine>
 					
 				</configuration>
-				<dependencies>
-					<dependency>
-                    <groupId>org.aspectj</groupId>
-                    <artifactId>aspectjweaver</artifactId>
-                    <version>1.9.22.1</version>
-                 </dependency>
-				</dependencies>
+				
 			</plugin>
 			
 		</plugins>		

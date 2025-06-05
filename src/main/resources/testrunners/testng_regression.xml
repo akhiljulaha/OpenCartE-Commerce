@@ -9,17 +9,18 @@
 			class-name="com.qa.opencart.listeners.ExtentReportListener" />
 	  <listener	
 			class-name="com.qa.opencart.listeners.TestAllureListener" />
-	  <listener	
-			class-name="com.qa.opencart.listeners.AnnotationTransformer" />  <!-- this is for the retry logic -->
+	 <listener	
+			class-name="com.qa.opencart.listeners.AnnotationTransformer" />
+			 <!-- this is for the retry logic -->
 	</listeners> 
 
 	<test name="Login Page Test">
-		<parameter name="browser" value="chrome" />
+		<parameter name="browser" value="firefox" />
 		<classes>
 			<class name="com.qa.opencart.tests.LoginPageTest"></class>
 		</classes>
 	</test>
-<!--	<test name="Accounts Page Test">
+ <!--<test name="Accounts Page Test">
 		<parameter name="browser" value="firefox" />
 		<classes>
 			<class name="com.qa.opencart.tests.AccountPageTest"></class>
@@ -31,7 +32,7 @@
 			<class name="com.qa.opencart.tests.SearchPageTest"></class>
 		</classes>
 	</test>
-	<test name="Product Info Test">
+ 	<test name="Product Info Test">
 		<parameter name="browser" value="chrome" />
 		<classes>
 			<class name="com.qa.opencart.tests.ProductPageInfoTest"></class>

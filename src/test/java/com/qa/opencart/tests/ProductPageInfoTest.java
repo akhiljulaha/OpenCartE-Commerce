@@ -22,7 +22,6 @@ public class ProductPageInfoTest extends BaseTest{
 		productInfoPage = resultsPage.selectProduct("MacBook Pro");
 		Map<String, String> productInfoMap = productInfoPage.getProductInfo();   // hasmap don't have any order
 		System.out.println(productInfoMap);
-		
 		softAssert.assertEquals(productInfoMap.get("Brand"), "Apple");
 		softAssert.assertEquals(productInfoMap.get("Availability"), "In Stock11");
 		softAssert.assertEquals(productInfoMap.get("productname"), "MacBook Pro00");
@@ -36,6 +35,7 @@ public class ProductPageInfoTest extends BaseTest{
 /**
 * In Hard Assert, if an assertion fails, the test execution stops, and the remaining assertions in the method are not executed.  
 * In Soft Assert, even if one assertion fails, the remaining assertions in the method will still be executed.  
+* IMPORTANT
 * The Assert methods are static in nature so we calling it directly
 * SoftAssert methods are non-static, requiring an instance(Object) of SoftAssert to be created.  
 * In SoftAssert, it is mandatory to call `softAssert.assertAll();` at the end; this will collect and report all assertion failures at once.  

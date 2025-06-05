@@ -1,5 +1,4 @@
 package com.qa.opencart.factory;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -51,7 +50,7 @@ public class DriverFactory {
 
 	}
 //IMP: It will return the thread local copy of the driver, not need to chanage anything in the baseTest
-	public synchronized static WebDriver getDriver() {  // synchronized not mandatory to writ
+	public synchronized static WebDriver getDriver() {  // synchronized not mandatory to write
 		return tlDriver.get();
 	}
 	public Properties initProp() {

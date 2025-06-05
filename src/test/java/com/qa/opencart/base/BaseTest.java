@@ -37,7 +37,7 @@ public class BaseTest {
 			prop.setProperty("browser", browserName);
 		}		
 		driver = df.initDriver(prop);
-		loginPage = new LoginPage(driver);   // we can't do this becuse login Page don't has to login 
+		loginPage = new LoginPage(driver);   // we can't do this because login Page don't has to login 
 		softAssert = new SoftAssert();
 	}
 
