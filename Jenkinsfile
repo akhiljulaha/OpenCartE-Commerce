@@ -1,55 +1,96 @@
-pipeline {
-    agent any
-
+pipeline { 
+    
+    agent any 
+    tools {
+       maven = 'maven'
+    }
+    
     stages {
         
         stage("Build") {
             steps {
-                echo "build the project"
+                git 'https://github.com/jglick/simple-maven-project-with-tests'
+                bat "mvn -Dmaven.test.failure.ignore=true clean package"
             }
-        }
-
-        stage("Run UTs") {
-            steps {
-                echo "run unit tests"
-            }
-        }
-
-        stage("Deploy to dev") {
-            steps {
-                echo "deploying to dev env"
+            post {
+                success {
+                    junit '**/target/surefire-reports/TEST-*.xml'
+                    archiveArtifacts 'target/*.jar'
+                }
             }
         }
 
         stage("Deploy to qa") {
             steps {
-                echo "deploying to qa env"
+                echo("deploy to qa")
             }
         }
 
-        stage("Run regression automation test cases") {
+        stage("Regression automation test") {
             steps {
-                echo "Run regression automation test cases"
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    git 'https://github.com/akhiljulaha/OpenCartE-Commerce'
+                    bat "mvn clean test -DsuiteXmlFile=src/main/resources/testrunners/testng_regression.xml"
+                }
+            }
+        }
+
+        stage('Publish Allure Reports') {
+            steps {
+                script {
+                    allure([
+                        includeProperties: false,
+                        jdk: '',
+                        properties: [],
+                        reportBuildPolicy: 'ALWAYS',
+                        results: [[path: '/allure-results']]
+                    ])
+                }
+            }
+        }
+
+        stage('Publish Extent Report') {
+            steps {
+                publishHTML([
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: false,
+                    keepAll: true,
+                    reportDir: 'reports',
+                    reportFiles: 'TestExecutionReport.html',
+                    reportName: 'HTML Regression Extent Report',
+                    reportTitles: ''
+                ])
             }
         }
 
         stage("Deploy to stage") {
             steps {
-                echo "deploying to stage env"
+                echo("deploy to stage")
             }
         }
 
-        stage("Run sanity automation test cases") {
+        stage("Sanity automation test") {
             steps {
-                echo "Run sanity automation test cases"
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    git 'https://github.com/akhiljulaha/OpenCartE-Commerce'
+                    bat "mvn clean test -DsuiteXmlFile=src/main/resources/testrunners/testng_chrome.xml"
+                }
             }
         }
 
-        stage("Deploy to prod") {
+        stage('Publish sanity Extent Report') {
             steps {
-                echo "deploying to prod env"
+                publishHTML([
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: false,
+                    keepAll: true,
+                    reportDir: 'reports',
+                    reportFiles: 'TestExecutionReport.html',
+                    reportName: 'HTML sanity Extent Report',
+                    reportTitles: ''
+                ])
             }
         }
 
-    }
+    } 
 }
