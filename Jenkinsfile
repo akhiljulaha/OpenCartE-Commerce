@@ -1,12 +1,15 @@
-pipeline { 
-    
-    agent any 
-   tools {
-    maven 'maven'
-}
-    
+pipeline {
+    agent any
+    tools {
+        maven 'maven'
+    }
+
+    parameters {
+        choice(name: 'SUITE', choices: ['testng_regression.xml', 'testng_chrome.xml'], description: 'Choose the test suite to run')
+    }
+
     stages {
-        
+
         stage("Build") {
             steps {
                 git 'https://github.com/jglick/simple-maven-project-with-tests'
@@ -22,15 +25,15 @@ pipeline {
 
         stage("Deploy to qa") {
             steps {
-                echo("deploy to qa")
+                echo("Deploying to QA...")
             }
         }
 
-        stage("Regression automation test") {
+        stage("Run Selected Automation Suite") {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     git 'https://github.com/akhiljulaha/OpenCartE-Commerce'
-                    bat "mvn clean test -DsuiteXmlFile=src/main/resources/testrunners/testng_regression.xml"
+                    bat "mvn clean test -DsuiteXmlFile=src/main/resources/testrunners/${params.SUITE}"
                 }
             }
         }
@@ -57,40 +60,11 @@ pipeline {
                     keepAll: true,
                     reportDir: 'reports',
                     reportFiles: 'TestExecutionReport.html',
-                    reportName: 'HTML Regression Extent Report',
+                    reportName: 'HTML Test Report',
                     reportTitles: ''
                 ])
             }
         }
 
-        stage("Deploy to stage") {
-            steps {
-                echo("deploy to stage")
-            }
-        }
-
-        stage("Sanity automation test") {
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    git 'https://github.com/akhiljulaha/OpenCartE-Commerce'
-                    bat "mvn clean test -DsuiteXmlFile=src/main/resources/testrunners/testng_chrome.xml"
-                }
-            }
-        }
-
-        stage('Publish sanity Extent Report') {
-            steps {
-                publishHTML([
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: false,
-                    keepAll: true,
-                    reportDir: 'reports',
-                    reportFiles: 'TestExecutionReport.html',
-                    reportName: 'HTML sanity Extent Report',
-                    reportTitles: ''
-                ])
-            }
-        }
-
-    } 
+    }
 }
