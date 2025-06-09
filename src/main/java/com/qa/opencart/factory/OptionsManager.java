@@ -27,6 +27,10 @@ public class OptionsManager {
 		if(Boolean.parseBoolean(prop.getProperty("incognito"))) {
 			co.addArguments("--incognito");
 		}
+		
+		if(Boolean.parseBoolean(prop.getProperty("remote"))) {
+			co.setCapability("browserName", "chrome");
+		}
 		return co;
 	}
 	public FirefoxOptions getFirefoxOptions() {

@@ -15,19 +15,19 @@
 	</listeners> 
 
 	<test name="Login Page Test">
-		<parameter name="browser" value="firefox" />
+		<parameter name="browser" value="chrome" />
 		<classes>
 			<class name="com.qa.opencart.tests.LoginPageTest"></class>
 		</classes>
 	</test>
 <test name="Accounts Page Test">
-		<parameter name="browser" value="firefox" />
+		<parameter name="browser" value="chome" />
 		<classes>
 			<class name="com.qa.opencart.tests.AccountPageTest"></class>
 		</classes>
 	</test>
 	<test name="Search Page Test">
-		<parameter name="browser" value="edge" />
+		<parameter name="browser" value="chrome" />
 		<classes>
 			<class name="com.qa.opencart.tests.SearchPageTest"></class>
 		</classes>
@@ -37,7 +37,7 @@
 		<classes>
 			<class name="com.qa.opencart.tests.ProductPageInfoTest"></class>
 		</classes>
-	</test> 
+	</test>  
 
 	<!--This is a comment. -->
 
